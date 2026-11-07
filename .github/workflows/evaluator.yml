@@ -1,0 +1,62 @@
+name: Avaliador Automatizado de Projetos (CI/CD)
+
+# Dispara a cada novo Pull Request ou commit enviado pelo aluno
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  avaliar_projeto:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar código do aluno
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Instalar dependências
+        run: npm ci || true
+
+      - name: Executar testes automatizados e gerar relatório
+        id: run_tests
+        run: |
+          node scripts/runTestsReport.js
+
+      - name: Publicar Comentário de Feedback no Pull Request
+        uses: thollander/actions-comment-pull-request@v2
+        if: always()
+        with:
+          filePath: ./feedback_final.md
+          comment_tag: logicaquest_evaluator_feedback
+          mode: recreate
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Enviar resultado para a plataforma LogicaQuest (Opcional)
+        if: always()
+        run: |
+          node -e '
+            const fs = require("fs");
+            try {
+              const report = JSON.parse(fs.readFileSync("resultado_testes.json", "utf8"));
+              const payload = {
+                prNumber: context.payload.pull_request ? context.payload.pull_request.number : null,
+                prUrl: context.payload.pull_request ? context.payload.pull_request.html_url : null,
+                score: report.percentage,
+                testsPassed: report.passed,
+                testsTotal: report.total,
+                status: report.isApproved ? "passed" : "failed",
+                feedback: `Avaliador Automático: ${report.passed}/${report.total} requisitos aprovados (${report.percentage}%).`
+              };
+              console.log("Payload pronto para Webhook:", JSON.stringify(payload));
+            } catch (err) {
+              console.log("Relatorio nao gerado:", err.message);
+            }
+          '

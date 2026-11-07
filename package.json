@@ -1,0 +1,19 @@
+{
+  "name": "desafio-git-iniciante",
+  "version": "1.0.0",
+  "description": "Desafio Prático de Git & GitHub: Sistema de Checkout & Cashback",
+  "main": "src/sistemaCheckout.js",
+  "scripts": {
+    "test": "node --test tests/checkout.test.js",
+    "test:json": "node scripts/runTestsReport.js"
+  },
+  "keywords": [
+    "git",
+    "github",
+    "logica",
+    "javascript",
+    "portugol"
+  ],
+  "author": "Dheniarley Lab",
+  "license": "MIT"
+}
