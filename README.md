@@ -69,6 +69,25 @@ O arquivo principal a ser desenvolvido é o `src/sistemaCheckout.js`. Cada funç
 
 ---
 
+## 💻 Pré-requisitos & Preparação do Ambiente
+
+Antes de começar a desenvolver o projeto na sua máquina, certifique-se de ter os seguintes recursos preparados:
+
+1. **Git Instalado:** Para controle de versões e gerenciamento de branches.
+   - [Baixar Git Oficial](https://git-scm.com/downloads) (verifique com `git --version` no terminal).
+2. **Node.js (v18 ou superior):** Necessário para executar a bateria de testes automatizados locais (`npm test`).
+   - [Baixar Node.js LTS](https://nodejs.org/) (verifique com `node -v` e `npm -v`).
+3. **Editor de Código (Recomendado: VS Code):**
+   - [Baixar Visual Studio Code](https://code.visualstudio.com/).
+4. **Conta no GitHub com Chave SSH ou Personal Access Token:**
+   - Necessário para autenticar no terminal ao clonar (`git clone`) e enviar suas alterações (`git push`).
+
+> 🚀 **Alternativa Sem Instalações (Nuvem):**  
+> Se preferir não instalar nada no computador agora, você pode usar o **GitHub Codespaces** direto no navegador!  
+> No seu fork, clique no botão verde **`<> Code`** ➔ aba **Codespaces** ➔ **Create codespace on main**. Um VS Code completo no navegador já abrirá com Git e Node.js configurados!
+
+---
+
 ## 🛠️ Passo a Passo para Desenvolver e Submeter
 
 ### Passo 1: Fazer o Fork
