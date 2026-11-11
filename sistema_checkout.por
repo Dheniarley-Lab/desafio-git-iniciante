@@ -46,7 +46,13 @@ programa {
     real desconto = 0.0
 
     // TODO: Implemente a validação do cupom aqui com se / senao se:
-    
+    se (cupom == "PROMO10") {
+      desconto = subtotal * 0.10
+    } senao se (cupom == "BEMVINDO20") {
+      desconto = subtotal * 0.20
+    } senao (cupom == "VIP30" e subtotal >= 100) {
+      desconto = subtotal * 0.30
+    }
 
     real valor_com_desconto = subtotal - desconto
 
