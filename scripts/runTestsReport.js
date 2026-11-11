@@ -87,10 +87,10 @@ testProcess.on('close', () => {
   fs.writeFileSync(reportPath, JSON.stringify(report, null, 2), 'utf-8');
   console.log(`\n[OK] Relatório gerado com sucesso em: ${reportPath}`);
 
-  // Barra de progresso visual com blocos
+  // Barra de progresso visual com emojis seguros para markdown
   const totalBlocks = 10;
   const filledBlocks = Math.round((Number(percentage) / 100) * totalBlocks);
-  const progressBar = '█'.repeat(filledBlocks) + '░'.repeat(totalBlocks - filledBlocks);
+  const progressBar = '🟩'.repeat(filledBlocks) + '⬜'.repeat(totalBlocks - filledBlocks);
 
   // Layout Dheniarley Lab com identidade visual própria
   const logoUrl = 'https://raw.githubusercontent.com/Dheniarley-Lab/desafio-git-iniciante/main/assets/logo-dheniarley-lab.png';
@@ -105,7 +105,7 @@ testProcess.on('close', () => {
   md += `| Métrica | Resultado |\n`;
   md += `| :--- | :--- |\n`;
   md += `| **Status** | ${report.isApproved ? '🟢 **Aprovado**' : '🔴 **Insuficiente para aprovação**'} |\n`;
-  md += `| **Progresso** | \`${progressBar}\` **${report.percentage}%** (${report.passed}/${report.total} requisitos) |\n`;
+  md += `| **Progresso** | ${progressBar} **${report.percentage}%** (${report.passed}/${report.total} requisitos) |\n`;
   md += `| **Critério Mínimo** | 70% de conformidade |\n\n`;
 
   md += `### 📋 Checklist de Validação dos Requisitos\n\n`;
