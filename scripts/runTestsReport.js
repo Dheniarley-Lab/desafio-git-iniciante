@@ -2,18 +2,18 @@ const { spawn } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-// Lista pré-definida dos 10 requisitos oficiais do projeto
+// Lista oficial dos 10 requisitos técnicos do projeto
 const DEFAULT_CRITERIA = [
-  '1 - Deve aplicar cupom PROMO10 com 10% de desconto corretamente',
-  '2 - Deve aplicar cupom BEMVINDO20 com 20% de desconto corretamente',
-  '3 - Deve aplicar cupom VIP30 (30%) apenas para subtotal >= 100',
-  '4 - Não deve aplicar desconto para cupons desconhecidos ou inválidos',
-  '5 - Deve conceder frete grátis (0.00) se valor com desconto for maior ou igual a R$ 150',
-  '6 - Deve calcular frete correto por região para compras abaixo de R$ 150',
-  '7 - Deve somar valor com desconto e frete no total_a_pagar',
-  '8 - Deve calcular cashback conforme categoria (BRONZE: 2%, PRATA: 5%, OURO: 10%)',
-  '9 - Deve exibir o resumo formatado no console com status concluído',
-  '10 - Fluxo integrado completo: subtotal 200, cupom VIP30, frete SUDESTE, categoria OURO'
+  '1 - Aplicar cupom PROMO10 com 10% de desconto',
+  '2 - Aplicar cupom BEMVINDO20 com 20% de desconto',
+  '3 - Aplicar cupom VIP30 (30%) para compras >= R$ 100',
+  '4 - Não conceder desconto para cupons inválidos ou desconhecidos',
+  '5 - Conceder frete grátis (R$ 0,00) em compras com desconto >= R$ 150',
+  '6 - Calcular tabela de frete por região para compras < R$ 150',
+  '7 - Calcular total final somando subtotal com desconto e frete',
+  '8 - Calcular cashback por categoria (BRONZE: 2%, PRATA: 5%, OURO: 10%)',
+  '9 - Exibir resumo formatado do pedido no terminal',
+  '10 - Fluxo integrado de ponta a ponta (Carrinho completo)'
 ];
 
 // Executa os testes usando o test runner nativo com reporter TAP / spec
@@ -39,10 +39,8 @@ testProcess.on('close', () => {
   const evaluatedMap = new Map();
 
   for (const line of lines) {
-    // Normalizar caracteres para Linux (Actions) e Windows
     const trimmed = line.trim();
 
-    // No Linux/CI os símbolos podem ser ✔/✖ ou ascii tick/cross, ou [eval]/node runner
     const isSuccess = trimmed.startsWith('✔') || trimmed.startsWith('ok ') || trimmed.includes('✔');
     const isFail = trimmed.startsWith('✖') || trimmed.startsWith('not ok ') || trimmed.includes('✖');
 
@@ -89,27 +87,42 @@ testProcess.on('close', () => {
   fs.writeFileSync(reportPath, JSON.stringify(report, null, 2), 'utf-8');
   console.log(`\n[OK] Relatório gerado com sucesso em: ${reportPath}`);
 
-  // Gerar o feedback em Markdown estilo Trybe / GitHub Actions
-  let md = `## 📊 Resultado da Avaliação do Projeto\n\n`;
-  md += `| Item | Status |\n`;
-  md += `| :--- | :--- |\n`;
-  md += `| **Desempenho** | **${report.isApproved ? '🟢 Aprovado' : '🔴 Insuficiente para aprovação'}** |\n`;
-  md += `| **Critério Mínimo** | 70% de aprovação |\n`;
-  md += `| **Percentual Cumprido** | **${report.percentage}%** (${report.passed}/${report.total} requisitos) |\n\n`;
+  // Barra de progresso visual com blocos
+  const totalBlocks = 10;
+  const filledBlocks = Math.round((Number(percentage) / 100) * totalBlocks);
+  const progressBar = '█'.repeat(filledBlocks) + '░'.repeat(totalBlocks - filledBlocks);
 
-  md += `### 📋 Resultado por Requisito\n\n`;
-  md += `| Requisito / Critério de Aceite | Avaliação |\n`;
-  md += `| :--- | :---: |\n`;
+  // Layout Dheniarley Lab com identidade visual própria
+  const logoUrl = 'https://raw.githubusercontent.com/Dheniarley-Lab/desafio-git-iniciante/main/assets/logo-dheniarley-lab.png';
+
+  let md = `<div align="center">\n\n`;
+  md += `<img src="${logoUrl}" alt="Dheniarley Lab" width="130" />\n\n`;
+  md += `## 🚀 Dheniarley Lab — Avaliador de Projetos\n`;
+  md += `**Desafio Prático: Sistema de Checkout em Portugol**\n\n`;
+  md += `</div>\n\n`;
+
+  md += `### 📊 Painel de Desempenho\n\n`;
+  md += `| Métrica | Resultado |\n`;
+  md += `| :--- | :--- |\n`;
+  md += `| **Status** | ${report.isApproved ? '🟢 **Aprovado**' : '🔴 **Insuficiente para aprovação**'} |\n`;
+  md += `| **Progresso** | \`${progressBar}\` **${report.percentage}%** (${report.passed}/${report.total} requisitos) |\n`;
+  md += `| **Critério Mínimo** | 70% de conformidade |\n\n`;
+
+  md += `### 📋 Checklist de Validação dos Requisitos\n\n`;
+  md += `| # | Requisito do Desafio | Status |\n`;
+  md += `| :-: | :--- | :-: |\n`;
 
   for (const r of results) {
-    const icon = r.passed ? '✔' : '❌';
-    md += `| ${r.name} | ${icon} |\n`;
+    const statusBadge = r.passed ? '✅ Aprovado' : '❌ Pendente';
+    md += `| **${r.num}** | ${r.name} | ${statusBadge} |\n`;
   }
 
   if (report.isApproved) {
-    md += `\n> 🚀 **Parabéns!** Seu projeto atingiu os critérios de aprovação de mercado. Seus pontos de XP foram creditados com sucesso na plataforma!\n`;
+    md += `\n---\n`;
+    md += `> 🎉 **Excelente trabalho!** Você superou os 70% exigidos e atendeu aos critérios de qualidade do Dheniarley Lab. Seus pontos de XP foram creditados!\n`;
   } else {
-    md += `\n> ⚠️ **Atenção:** Você precisa de no mínimo 70% de aproveitamento para aprovação. Revise os requisitos com ❌, faça as correções e faça um novo commit na sua branch para reavaliar!\n`;
+    md += `\n---\n`;
+    md += `> 💡 **Dica de Engenharia:** Revise os itens marcados como **❌ Pendente**. Ajuste a lógica no arquivo \`sistema_checkout.por\` e faça um novo commit na sua branch para atualizar este painel automaticamente!\n`;
   }
 
   const mdPath = path.resolve(__dirname, '..', 'feedback_final.md');
