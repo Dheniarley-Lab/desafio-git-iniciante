@@ -50,7 +50,7 @@ programa {
       desconto = subtotal * 0.10
     } senao se (cupom == "BEMVINDO20") {
       desconto = subtotal * 0.20
-    } senao (cupom == "VIP30" e subtotal >= 100) {
+    } senao se (cupom == "VIP30" e subtotal >= 100) {
       desconto = subtotal * 0.30
     }
 
