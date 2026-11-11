@@ -68,7 +68,7 @@ testProcess.on('close', () => {
   let md = `## 📊 Resultado da Avaliação do Projeto\n\n`;
   md += `| Item | Status |\n`;
   md += `| :--- | :--- |\n`;
-  md += `| **Desempenho** | **${report.isApproved ? '🟢 Aprovado' : '🔴 Insuficiente (Recuperação)'}** |\n`;
+  md += `| **Desempenho** | **${report.isApproved ? '🟢 Aprovado' : '🔴 Insuficiente para aprovação'}** |\n`;
   md += `| **Critério Mínimo** | 70% de aprovação |\n`;
   md += `| **Percentual Cumprido** | **${report.percentage}%** (${report.passed}/${report.total} requisitos) |\n\n`;
 
