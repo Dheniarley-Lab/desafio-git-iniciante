@@ -46,7 +46,13 @@ programa {
     real desconto = 0.0
 
     // TODO: Implemente a validação do cupom aqui com se / senao se:
-    
+    se (cupom == "PROMO10") {
+      desconto = subtotal * 0.10
+    } senao se (cupom == "BEMVINDO20") {
+      desconto = subtotal * 0.20
+    } senao se (cupom == "VIP30" e subtotal >= 100) {
+      desconto = subtotal * 0.30
+    }
 
     real valor_com_desconto = subtotal - desconto
 
@@ -65,7 +71,21 @@ programa {
     real frete = 0.0
 
     // TODO: Implemente a lógica do frete aqui com se / senao se:
-
+    se (valor_com_desconto >= 150.0) {
+      frete = 0.0
+    } senao se (regiao == "SUDESTE") {
+      frete = 15.0
+    } senao se (regiao == "SUL") {
+      frete = 20.0
+    } senao se (regiao == "CENTRO-OESTE") {
+      frete = 25.0
+    } senao se (regiao == "NORDESTE") {
+      frete = 30.0
+    } senao se (regiao == "NORTE") {
+      frete = 35.0
+    } senao {
+      frete = 40.0
+    }
 
     // ========================================================
     // PASSO 3: CALCULAR TOTAL A PAGAR
