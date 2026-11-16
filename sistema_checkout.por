@@ -105,8 +105,8 @@ programa {
     
     // TODO: Implemente o cálculo do cashback aqui com se / senao se:
     se (categoria == "BRONZE") {
-      cashback = total_a_pagar 0.02
-    } senao se (categoria == "Prata") {
+      cashback = total_a_pagar * 0.02
+    } senao se (categoria == "PRATA") {
       cashback = total_a_pagar * 0.05
     } senao se (categoria == "OURO") {
       cashback = total_a_pagar * 0.10
