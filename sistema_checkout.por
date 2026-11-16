@@ -102,9 +102,11 @@ programa {
     // - Outras                  -> 0%
     // ========================================================
     real cashback = 0.0
-
+    
     // TODO: Implemente o cálculo do cashback aqui com se / senao se:
-
+    se (categoria = "BRONZE") {
+      cashback = 0.02
+    }
 
     // ========================================================
     // PASSO 5: EXIBIÇÃO DO RECIBO FINAL DO PEDIDO
