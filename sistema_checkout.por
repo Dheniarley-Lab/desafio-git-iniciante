@@ -21,13 +21,7 @@ programa {
 
     escreva("Digite a categoria do cliente (BRONZE, PRATA, OURO ou NORMAL): ")
     leia(categoria)
-    se (cupom == "PROMO10") {
-			desconto = subtotal * 0.10
-		} senao se (cupom == "BEMVINDO20") {
-			desconto = subtotal * 0.20
-		} senao se (cupom == "VIP30" e subtotal >= 100) {
-			desconto = subtotal * 0.30
-		}
+    
     // ========================================================
     // PASSO 1: APLICAR CUPOM DE DESCONTO SOBRE O SUBTOTAL
     // Regras:
@@ -40,7 +34,13 @@ programa {
 
     // TODO: Implemente a validação do cupom aqui com se / senao se:
     // iniciandoprojeto
-
+    se (cupom == "PROMO10") {
+			desconto = subtotal * 0.10
+		} senao se (cupom == "BEMVINDO20") {
+			desconto = subtotal * 0.20
+		} senao se (cupom == "VIP30" e subtotal >= 100) {
+			desconto = subtotal * 0.30
+		}
     real valor_com_desconto = subtotal - desconto
 
     // ========================================================
