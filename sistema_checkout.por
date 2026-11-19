@@ -21,7 +21,13 @@ programa {
 
     escreva("Digite a categoria do cliente (BRONZE, PRATA, OURO ou NORMAL): ")
     leia(categoria)
-
+    se (cupom == "PROMO10") {
+			desconto = subtotal * 0.10
+		} senao se (cupom == "BEMVINDO20") {
+			desconto = subtotal * 0.20
+		} senao se (cupom == "VIP30" e subtotal >= 100) {
+			desconto = subtotal * 0.30
+		}
     // ========================================================
     // PASSO 1: APLICAR CUPOM DE DESCONTO SOBRE O SUBTOTAL
     // Regras:
@@ -50,10 +56,24 @@ programa {
     //     Outras       -> 40.00
     // ========================================================
     real frete = 0.0
-
+    
     // TODO: Implemente a lógica do frete aqui com se / senao se:
-
-
+    se (valor_com_desconto >= 150.0) {
+			frete = 0.00
+		} senao se (regiao == "SUDESTE") {
+			frete = 15.00
+		} senao se (regiao == "SUL") {
+			frete = 20.00
+		} senao se (regiao == "CENTRO-OESTE") {
+			frete = 25.00
+		} senao se (regiao == "NORDESTE") {
+			frete = 30.00
+		} senao se (regiao == "NORTE") {
+			frete = 35.00
+		} senao {
+			frete = 40.00
+		}
+    
     // ========================================================
     // PASSO 3: CALCULAR TOTAL A PAGAR
     // total = valor_com_desconto + frete
@@ -71,7 +91,13 @@ programa {
     real cashback = 0.0
 
     // TODO: Implemente o cálculo do cashback aqui com se / senao se:
-
+    se (categoria == "BRONZE") {
+			cashback = total_a_pagar * 0.02
+		} senao se (categoria == "PRATA") {
+			cashback = total_a_pagar * 0.05
+		} senao se (categoria == "OURO") {
+			cashback = total_a_pagar * 0.10
+		}
 
     // ========================================================
     // PASSO 5: EXIBIÇÃO DO RECIBO FINAL DO PEDIDO
