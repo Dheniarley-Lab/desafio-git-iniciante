@@ -4,19 +4,6 @@ programa {
     // DESAFIO PRÁTICO: SISTEMA DE CHECKOUT E-COMMERCE
     // Plataforma: Dheniarley Lab
     // ========================================================
-    //
-    // Este programa simula o fechamento de um pedido de compras.
-    // Você aplicará tudo o que aprendeu nas fases práticas de Portugol:
-    // variáveis, leitura de dados, operações aritméticas e estruturas condicionais (se/senao).
-    //
-    // --------------------------------------------------------
-    // ENTRADAS DO PROGRAMA (nesta exata ordem com leia):
-    // 1. subtotal (real): valor dos produtos no carrinho
-    // 2. cupom (cadeia): código do cupom digitado
-    // 3. regiao (cadeia): região de entrega (SUDESTE, SUL, etc.)
-    // 4. categoria (cadeia): categoria do cliente (BRONZE, PRATA, OURO ou NORMAL)
-    // --------------------------------------------------------
-
     real subtotal
     cadeia cupom
     cadeia regiao
@@ -46,7 +33,7 @@ programa {
     real desconto = 0.0
 
     // TODO: Implemente a validação do cupom aqui com se / senao se:
-    
+    // Testando
 
     real valor_com_desconto = subtotal - desconto
 
