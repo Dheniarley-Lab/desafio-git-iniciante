@@ -9,6 +9,8 @@ programa {
     cadeia regiao
     cadeia categoria
 
+    // Comentário Dheniarley
+
     // 1. Leitura das informações da compra
     escreva("Digite o subtotal da compra: ")
     leia(subtotal)
