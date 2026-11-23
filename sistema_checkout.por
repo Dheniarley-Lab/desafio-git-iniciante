@@ -4,23 +4,12 @@ programa {
     // DESAFIO PRÁTICO: SISTEMA DE CHECKOUT E-COMMERCE
     // Plataforma: Dheniarley Lab
     // ========================================================
-    //
-    // Este programa simula o fechamento de um pedido de compras.
-    // Você aplicará tudo o que aprendeu nas fases práticas de Portugol:
-    // variáveis, leitura de dados, operações aritméticas e estruturas condicionais (se/senao).
-    //
-    // --------------------------------------------------------
-    // ENTRADAS DO PROGRAMA (nesta exata ordem com leia):
-    // 1. subtotal (real): valor dos produtos no carrinho
-    // 2. cupom (cadeia): código do cupom digitado
-    // 3. regiao (cadeia): região de entrega (SUDESTE, SUL, etc.)
-    // 4. categoria (cadeia): categoria do cliente (BRONZE, PRATA, OURO ou NORMAL)
-    // --------------------------------------------------------
-
     real subtotal
     cadeia cupom
     cadeia regiao
     cadeia categoria
+
+    // Comentário Dheniarley
 
     // 1. Leitura das informações da compra
     escreva("Digite o subtotal da compra: ")
@@ -34,7 +23,7 @@ programa {
 
     escreva("Digite a categoria do cliente (BRONZE, PRATA, OURO ou NORMAL): ")
     leia(categoria)
-
+    
     // ========================================================
     // PASSO 1: APLICAR CUPOM DE DESCONTO SOBRE O SUBTOTAL
     // Regras:
@@ -46,8 +35,14 @@ programa {
     real desconto = 0.0
 
     // TODO: Implemente a validação do cupom aqui com se / senao se:
-    
-
+    // iniciandoprojeto
+    se (cupom == "PROMO10") {
+			desconto = subtotal * 0.10
+		} senao se (cupom == "BEMVINDO20") {
+			desconto = subtotal * 0.20
+		} senao se (cupom == "VIP30" e subtotal >= 100) {
+			desconto = subtotal * 0.30
+		}
     real valor_com_desconto = subtotal - desconto
 
     // ========================================================
@@ -63,10 +58,24 @@ programa {
     //     Outras       -> 40.00
     // ========================================================
     real frete = 0.0
-
+    
     // TODO: Implemente a lógica do frete aqui com se / senao se:
-
-
+    se (valor_com_desconto >= 150.0) {
+			frete = 0.00
+		} senao se (regiao == "SUDESTE") {
+			frete = 15.00
+		} senao se (regiao == "SUL") {
+			frete = 20.00
+		} senao se (regiao == "CENTRO-OESTE") {
+			frete = 25.00
+		} senao se (regiao == "NORDESTE") {
+			frete = 30.00
+		} senao se (regiao == "NORTE") {
+			frete = 35.00
+		} senao {
+			frete = 40.00
+		}
+    
     // ========================================================
     // PASSO 3: CALCULAR TOTAL A PAGAR
     // total = valor_com_desconto + frete
@@ -84,7 +93,13 @@ programa {
     real cashback = 0.0
 
     // TODO: Implemente o cálculo do cashback aqui com se / senao se:
-
+    se (categoria == "BRONZE") {
+			cashback = total_a_pagar * 0.02
+		} senao se (categoria == "PRATA") {
+			cashback = total_a_pagar * 0.05
+		} senao se (categoria == "OURO") {
+			cashback = total_a_pagar * 0.10
+		}
 
     // ========================================================
     // PASSO 5: EXIBIÇÃO DO RECIBO FINAL DO PEDIDO
